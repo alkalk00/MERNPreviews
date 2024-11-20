@@ -135,9 +135,9 @@ const data = [
   },
 ];
 
-function getBooks() {
-  return data;
-}
+// function getBooks() {
+//   return data;
+// }
 
 function getBook(id) {
   return data.find((d) => d.id === id);
@@ -145,7 +145,7 @@ function getBook(id) {
 
 //destructuring
 
-const book = getBook(2);
+const book = getBook(3);
 
 // const title = book.title;
 // const author = book.author;
@@ -153,7 +153,8 @@ const book = getBook(2);
 // title;
 
 //object
-const { author, title, genres } = book;
+const { author, title, genres, pages, hasMovieAdaptation, publicationDate } =
+  book;
 
 console.log(author, title);
 
@@ -162,5 +163,43 @@ const [onegenres, twogenres, ...restgenres] = genres;
 console.log(onegenres, twogenres, restgenres);
 
 //spread operator
-const UpdateGenes = [...genres, "Byomkesh Bokshi"];
+const UpdateGenes = [...genres, "detective"];
 UpdateGenes;
+
+//spread operator with override
+const newBooks = { ...book, title: "Byomkesh Boksh", pages: 2111 };
+newBooks;
+
+//template literal
+const pagerange =
+  pages < 1000 ? "has over 1000 pages" : "has less then 1000 pages";
+pagerange;
+
+const summary = `${title} has ${
+  hasMovieAdaptation ? "" : "not"
+} moview adaptation`;
+
+summary;
+
+//arrow function
+const getYear = (str) => str.split("-")[0];
+
+console.log(getYear(publicationDate));
+
+//sort ciruts(&& , || )
+console.log(pages < 1000 && hasMovieAdaptation);
+
+const bengaliTranstate = book.translations.bengali || "Not translated";
+console.log(bengaliTranstate);
+
+//optional chaining -> it's sees if the value is present or not if not it stops on that point and then we can use
+//colashing operator it set to be zero if we are not sure the value exits or not.
+function getReviewCount(book) {
+  const goodreads = book.reviews.goodreads.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+
+  console.log(librarything, goodreads);
+
+  return goodreads + librarything;
+}
+console.log(getReviewCount(book));
